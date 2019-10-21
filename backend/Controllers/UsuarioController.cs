@@ -14,61 +14,61 @@ namespace backend.Controllers
     // Define a rota do controller, e diz que é um controller de API
     [Route("api/[controller]")] 
     [ApiController]
-    public class EventoController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
         GufosContext _contexto = new GufosContext();
 
-        // GET: api/Evento
+        
+        // GET: api/Usuario
 
         /// <summary>
-        /// Listar Eventos
+        /// Listar os Usuarios
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Lista de Usuarios</returns>
         [HttpGet]
-        public async Task<ActionResult<List<Evento>>> Get()
+        public async Task<ActionResult<List<Usuario>>> Get()
         {
-            var eventos = await _contexto.Evento.Include("Categoria").Include("Localizacao").ToListAsync();
+            var usuarios = await _contexto.Usuario.Include("TipoUsuario").Include("Presenca").ToListAsync();
 
-            if(eventos == null) {
+            if(usuarios == null) {
                 return NotFound();
             }
 
-            return eventos;
+            return usuarios;
         }
         
-        // GET: api/Evento/2
-
+        // GET: api/Usuario/2
         /// <summary>
-        /// Chamar Evento pelo ID
+        /// Chamar Usuario pelo ID
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>ID do Usuario</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Evento>> Get(int id)
+        public async Task<ActionResult<Usuario>> Get(int id)
         {
-            var evento = await _contexto.Evento.Include("Categoria").Include("Localizacao").FirstOrDefaultAsync(e => e.EventoId == id);
+            var usuario = await _contexto.Usuario.Include("TipoUsuario").Include("Presenca").FirstOrDefaultAsync(e => e.UsuarioId == id);
 
-            if(evento == null) {
+            if(usuario == null) {
                 return NotFound();
             }
 
-            return evento;
+            return usuario;
         }
 
-        // POST: api/Evento
+        // POST: api/Usuario
 
         /// <summary>
-        /// Cadastrar Evento
+        /// Cadastrar Usuario
         /// </summary>
-        /// <param name="evento"></param>
+        /// <param name="usuario"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<Evento>> Post(Evento evento)
+        public async Task<ActionResult<Usuario>> Post(Usuario usuario)
         {
             try
             {
                 // Tratamento contra SQL Injection
-                await _contexto.AddAsync(evento);
+                await _contexto.AddAsync(usuario);
                 await _contexto.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -76,34 +76,34 @@ namespace backend.Controllers
                 throw;
             }
             
-            return evento;
+            return usuario;
         }
 
         // PUT
 
         /// <summary>
-        /// Editar Evento pelo ID
+        /// Editar Usuario Listado pelo ID
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="evento"></param>
+        /// <param name="usuario"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, Evento evento)
+        public async Task<ActionResult> Put(int id, Usuario usuario)
         {
-            if(id != evento.EventoId){
+            if(id != usuario.UsuarioId){
                 return BadRequest();
             }
 
             // Comparamos os atributos que foram modificados através do EF
-            _contexto.Entry(evento).State = EntityState.Modified;
+            _contexto.Entry(usuario).State = EntityState.Modified;
             
             try {
                 await _contexto.SaveChangesAsync(); 
             } catch (DbUpdateConcurrencyException) {
                 // Verfica se o objeto inserido existe no banco
-                var evento_valido = await _contexto.Evento.FindAsync(id);
+                var usuario_valido = await _contexto.Usuario.FindAsync(id);
 
-                if(evento_valido == null) {
+                if(usuario_valido == null) {
                     return NotFound();
                 } else {
                     throw;
@@ -113,25 +113,25 @@ namespace backend.Controllers
             return NoContent();
         }
 
-        // DELETE api/evento/id
+        // DELETE api/usuario/id
 
         /// <summary>
-        /// Deletar Evento
+        /// Deletar Usuario pelo ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Evento>> Delete(int id){
-            var evento = await _contexto.Evento.FindAsync(id);
+        public async Task<ActionResult<Usuario>> Delete(int id){
+            var usuario = await _contexto.Usuario.FindAsync(id);
 
-            if(evento == null) {
+            if(usuario == null) {
                 return NotFound();
             }
 
-            _contexto.Evento.Remove(evento);
+            _contexto.Usuario.Remove(usuario);
             await _contexto.SaveChangesAsync();
             
-            return evento;
+            return usuario;
         }
     }
 }

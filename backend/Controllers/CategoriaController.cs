@@ -14,6 +14,11 @@ namespace backend.Controllers
         GufosContext _contexto = new GufosContext();
 
         // GET: api/Categoria
+
+        /// <summary>
+        /// Lista de Categorias
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<Categoria>>> Get()
         {
@@ -27,6 +32,12 @@ namespace backend.Controllers
         }
 
         // GET: api/Categoria/2
+
+        /// <summary>
+        /// Chamar Categoria pelo ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Categoria>> Get(int id)
         {
@@ -42,6 +53,11 @@ namespace backend.Controllers
 
         // POST: api/Categoria
 
+        /// <summary>
+        /// Cadastrar Nova Categoria
+        /// </summary>
+        /// <param name="categoria"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Categoria>> Post(Categoria categoria)
         {
@@ -60,6 +76,12 @@ namespace backend.Controllers
             return categoria;
         }
 
+        /// <summary>
+        /// Editar Categorias Listadas
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="categoria"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> Put( int id, Categoria categoria)
         {
@@ -94,6 +116,12 @@ namespace backend.Controllers
         }
 
         //  DELETE api/categoria/id
+
+        /// <summary>
+        /// Deletar Categoria pelo ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Categoria>> Delete(int id)
         {

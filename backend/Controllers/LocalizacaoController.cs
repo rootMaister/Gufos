@@ -14,6 +14,11 @@ namespace backend.Controllers
         GufosContext _contexto = new GufosContext();
 
         // GET: api/Localizacao
+
+        /// <summary>
+        /// Listar Localizações 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<Localizacao>>> Get()
         {
@@ -27,6 +32,12 @@ namespace backend.Controllers
         }
 
         // GET: api/Localizacao/2
+
+        /// <summary>
+        /// Chamar Localização pelo ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Localizacao>> Get(int id)
         {
@@ -42,6 +53,12 @@ namespace backend.Controllers
 
         // POST: api/Localizacao
 
+        
+        /// <summary>
+        /// Cadastrar Event pelo ID
+        /// </summary>
+        /// <param name="localizacao"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Localizacao>> Post(Localizacao localizacao)
         {
@@ -59,7 +76,13 @@ namespace backend.Controllers
 
             return localizacao;
         }
-
+        
+        /// <summary>
+        /// Editar Localização
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="localizacao"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> Put( int id, Localizacao localizacao)
         {
@@ -94,6 +117,12 @@ namespace backend.Controllers
         }
 
         //  DELETE api/localizacao/id
+
+        /// <summary>
+        /// Deletar Localização
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Localizacao>> Delete(int id)
         {
